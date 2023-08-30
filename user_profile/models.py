@@ -3,8 +3,6 @@ from django.db import models
 #TODO trocar ForeignKeys to ManyToManys
 #TODO string em todos os models
 
-# Create your models here.
-
 class User_Profile(models.Model):
     name = models.CharField(max_length=128)
     profile_image = models.URLField(max_length=256)
