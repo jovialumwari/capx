@@ -56,8 +56,16 @@ Before you begin, ensure you have met the following requirements:
 6. Create the database and apply migrations:
    ```bash
    python manage.py migrate
+   
+7. Create a superuser to have full control over the database:
+   ``` bash
+   python manage.py createsuperuser
 
-7. Start the development server:
+8. Install initial data:
+   ``` bash
+   python manage.py loaddata fixtures/initial_data.json
+
+9. Start the development server:
    ```bash
     python manage.py runserver
 
