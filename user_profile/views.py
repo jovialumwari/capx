@@ -6,4 +6,4 @@ from django.shortcuts import render
 #TODO criar alguns dados no BD para ter dados para puxar para resultados na tela
 
 def profile(request):
-    return render(request, 'user_profile.html')
+    return render(request, 'profile.html')
