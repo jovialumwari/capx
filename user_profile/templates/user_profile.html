@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <div class="row">
+        <div class="row">
+            <div class="col-md-3">
+                <!-- Profile Image -->
+                <img src="user_profile_image.jpg" class="img-fluid rounded-circle" alt="User Profile Image">
+            </div>
+            <div class="col-md-9">
+                <!-- User Details -->
+                <h1>User's Full Name</h1>
+                <p>Username: @username</p>
+                <p>Pronoun: He/Him</p>
+                <p>Contact Method: Email</p>
+            </div>
+        </div>
+        
+        <!-- Social Media Links -->
+        <div class="mt-4">
+            <h2>Social Media</h2>
+            <p>Twitter: @twitter_handle</p>
+            <p>Facebook: @facebook_handle</p>
+            <p>Instagram: @instagram_handle</p>
+        </div>
+        
+        <!-- Localization Preferences -->
+        <div class="mt-4">
+            <h2>Localization Preferences</h2>
+            <p>Region: Region Name</p>
+            <p>Languages: English, French</p>
+            <p>Affiliation: Organization Name</p>
+            <p>Wikimedia Project: Project Name</p>
+        </div>
+        
+        <!-- Skills and Areas of Interest -->
+        <div class="mt-4">
+            <h2>Skills</h2>
+            <p>Skills Known: Skill 1, Skill 2, Skill 3</p>
+            <p>Skills Desired: Skill 4, Skill 5</p>
+        </div>
+    </div>
+{% endblock %}
