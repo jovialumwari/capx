@@ -1,1 +1,4 @@
 Django
+mysqlclient
+whitenoise
+social-auth-app-django

@@ -1,10 +1,10 @@
 from django.db import models
-from user_profile.models import UserProfile
+from users.models import Profile
 
 
 class Event(models.Model):
     name = models.CharField(max_length=128)
-    creator = models.ForeignKey(UserProfile, null=True, on_delete=models.CASCADE)  # should be linked to CapX user ID and not the profile ID
+    creator = models.ForeignKey(Profile, null=True, on_delete=models.CASCADE)  # should be linked to CapX user ID and not the profile ID
     date_of_creation = models.DateField()
     date_of_last_edit = models.DateField()
     description = models.CharField(max_length=512)

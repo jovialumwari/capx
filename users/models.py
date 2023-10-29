@@ -1,5 +1,5 @@
 from django.db import models
-from django.contrib.auth.admin import User
+from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin, UserManager
 from django.utils.translation import gettext_lazy as _
 from django.dispatch import receiver
 from django.db.models.signals import post_save
@@ -53,7 +53,24 @@ class AreaOfInterest(models.Model):
         return self.area_name
 
 
-class UserProfile(models.Model):
+class CustomUser(AbstractBaseUser, PermissionsMixin):
+    username = models.CharField(_("username"), max_length=100, unique=True,help_text=_("100 characters or fewer"))
+    first_name = models.CharField(_('first name'), max_length=30, null=True, blank=True)
+    last_name = models.CharField(_('last name'), max_length=30, null=True, blank=True)
+    email = models.EmailField(_('email address'), max_length=255, unique=True, null=True, blank=True)
+    is_staff = models.BooleanField(_('staff status'), default=False,
+                                   help_text=_('Designates whether the user can log into this admin site.'))
+    is_active = models.BooleanField(_('active'), default=True, help_text=_(
+        'Designates whether this user should be treated as active. Unselect this instead of deleting accounts.'))
+    date_joined = models.DateTimeField(_('date joined'), auto_now=True)
+    groups = models.JSONField(null=True, blank=False)
+
+    USERNAME_FIELD = 'username'
+
+    objects = UserManager()
+
+
+class Profile(models.Model):
     PRONOUN = (
         ("he-him", _("He/Him")),
         ("she-her", _("She/Her")),
@@ -66,7 +83,7 @@ class UserProfile(models.Model):
     )
 
     # PERSONAL INFORMATION
-    user = models.OneToOneField(User, on_delete=models.CASCADE, editable=False)
+    user = models.OneToOneField(CustomUser, on_delete=models.CASCADE, editable=False)
     groups = models.JSONField(verbose_name=_("Groups"), null=True, blank=True)
     username = models.CharField(verbose_name=_("Username"), max_length=150, unique=True, blank=True,
                                 error_messages={"unique": _("A user with that username already exists.")})
@@ -117,7 +134,7 @@ class UserProfile(models.Model):
             return self.username
 
 
-@receiver(post_save, sender=User)
+@receiver(post_save, sender=CustomUser)
 def create_user_profile(sender, instance, created, **kwargs):
     if created:
-        UserProfile.objects.create(user=instance)
+        Profile.objects.create(user=instance, username=instance.username)
