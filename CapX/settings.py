@@ -16,6 +16,7 @@ from .settings_local import *
 # Application definition
 
 INSTALLED_APPS = [
+    'whitenoise.runserver_nostatic',
     'users',
     'skills',
     'map',
