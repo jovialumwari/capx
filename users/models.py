@@ -4,6 +4,7 @@ from django.utils.translation import gettext_lazy as _
 from django.dispatch import receiver
 from django.db.models.signals import post_save
 from skills.models import Skill
+from datetime import datetime
 
 
 class Affiliation(models.Model):
@@ -54,20 +55,21 @@ class AreaOfInterest(models.Model):
 
 
 class CustomUser(AbstractBaseUser, PermissionsMixin):
-    username = models.CharField(_("username"), max_length=100, unique=True,help_text=_("100 characters or fewer"))
+    username = models.CharField(_("username"), max_length=100, unique=True, help_text=_("100 characters or fewer"))
     first_name = models.CharField(_('first name'), max_length=30, null=True, blank=True)
+    middle_name = models.CharField(_("middle name"), max_length=128, null=True, blank=True)
     last_name = models.CharField(_('last name'), max_length=30, null=True, blank=True)
-    email = models.EmailField(_('email address'), max_length=255, unique=True, null=True, blank=True)
+    email = models.EmailField(_('email address'), max_length=255, null=True, blank=True)
     is_staff = models.BooleanField(_('staff status'), default=False,
                                    help_text=_('Designates whether the user can log into this admin site.'))
     is_active = models.BooleanField(_('active'), default=True, help_text=_(
         'Designates whether this user should be treated as active. Unselect this instead of deleting accounts.'))
-    date_joined = models.DateTimeField(_('date joined'), auto_now=True)
-    groups = models.JSONField(null=True, blank=False)
-
-    USERNAME_FIELD = 'username'
+    date_joined = models.DateTimeField(_('date joined'), default=datetime.now())
+    user_groups = models.JSONField(null=True, blank=False)
 
     objects = UserManager()
+
+    USERNAME_FIELD = 'username'
 
 
 class Profile(models.Model):
@@ -84,14 +86,8 @@ class Profile(models.Model):
 
     # PERSONAL INFORMATION
     user = models.OneToOneField(CustomUser, on_delete=models.CASCADE, editable=False)
-    groups = models.JSONField(verbose_name=_("Groups"), null=True, blank=True)
-    username = models.CharField(verbose_name=_("Username"), max_length=150, unique=True, blank=True,
-                                error_messages={"unique": _("A user with that username already exists.")})
     pronoun = models.CharField(verbose_name=_("Pronoun"), max_length=20, choices=PRONOUN, null=True, blank=True)
     profile_image = models.URLField(verbose_name=_("Profile image"), null=True, blank=True)
-    first_name = models.CharField(verbose_name=_("First name"), max_length=128, null=True, blank=True)
-    middle_name = models.CharField(verbose_name=_("Middle name"), max_length=128, null=True, blank=True)
-    last_name = models.CharField(verbose_name=_("Last name"), max_length=128, null=True, blank=True)
     display_name = models.CharField(verbose_name=_("Display name"), max_length=387, null=True, blank=True)
     birthday = models.DateField(verbose_name=_("Birthday"), null=True, blank=True)
 
@@ -101,8 +97,6 @@ class Profile(models.Model):
     instagram = models.CharField(verbose_name=_("Instagram handle"), max_length=128, null=True, blank=True)
 
     # CONTACT
-    email = models.EmailField(null=True, unique=True, blank=True,
-                              error_messages={"unique": _("This email is already in use.")})
     contact_method = models.CharField(verbose_name=_("Preferred contact method"), max_length=10,
                                       choices=CONTACT_METHOD, null=True, blank=True)
 
@@ -122,19 +116,19 @@ class Profile(models.Model):
                                            blank=True)
 
     def __str__(self):
-        if self.first_name:
-            if self.last_name:
-                if self.middle_name:
-                    return self.first_name + " " + self.middle_name[0] + ". " + self.last_name
+        if self.user and self.user.first_name:
+            if self.user and self.user.last_name:
+                if self.user and self.user.middle_name:
+                    return self.user.first_name + " " + self.user.middle_name[0] + ". " + self.user.last_name
                 else:
-                    return self.first_name + " " + self.last_name
+                    return self.user.first_name + " " + self.user.last_name
             else:
-                return self.first_name
+                return self.user.first_name
         else:
-            return self.username
+            return self.user.username
 
 
 @receiver(post_save, sender=CustomUser)
 def create_user_profile(sender, instance, created, **kwargs):
     if created:
-        Profile.objects.create(user=instance, username=instance.username)
+        Profile.objects.create(user=instance)
