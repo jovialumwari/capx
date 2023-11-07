@@ -1,5 +1,6 @@
-Django
-mysqlclient
-whitenoise
+django
 social-auth-app-django
+whitenoise
+mysqlclient
 pymysql
+requests

@@ -26,9 +26,9 @@
             <div class="w3-half">
                 <div class="w3-row text-block">
                     {% if user.is_authenticated %}
-                        <a href="{% url 'users:logout' %}"><button type="button" class="red_btn" title="{% trans 'Logout of the Capacity Exchange Prototype' %}">{% trans "Logout" %}</button></a>
+                        <a href="{% url 'logout' %}"><button type="button" class="red_btn" title="{% trans 'Logout of the Capacity Exchange Prototype' %}">{% trans "Logout" %}</button></a>
                     {% else %}
-                        <a href="{% url 'users:login' %}"><button type="button" class="blue_btn" title="{% trans 'Enter the Capacity Exchange Prototype' %}">{% trans "Login" %}</button></a>
+                        <a href="{% url 'login' %}"><button type="button" class="blue_btn" title="{% trans 'Enter the Capacity Exchange Prototype' %}">{% trans "Login" %}</button></a>
                     {% endif %}
                 </div>
                 <div class="w3-row text-block"><a href="{% url 'admin:index' %}"><button type="button" class="blue_btn" title="{% trans 'Go to the Admin Panel' %}">{% trans "Go to the Admin Panel" %}</button></a></div>

@@ -81,10 +81,12 @@ SOCIAL_AUTH_PIPELINE = (
     'social_core.pipeline.user.user_details',
 )
 
+PROTECTED_USER_FIELDS = ['groups']
+
 WSGI_APPLICATION = 'CapX.wsgi.application'
 
 LOGIN_URL = 'login'
-LOGIN_REDIRECT_URL = 'users:homepage'
+LOGIN_REDIRECT_URL = 'homepage'
 
 SOCIAL_AUTH_URL_NAMESPACE = 'social'
 

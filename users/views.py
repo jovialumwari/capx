@@ -22,4 +22,4 @@ def login_oauth(request):
 
 def logout(request):
     auth_logout(request)
-    return redirect(reverse('users:homepage'))
+    return redirect(reverse('homepage'))

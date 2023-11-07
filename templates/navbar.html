@@ -2,14 +2,14 @@
 {% load i18n %}
 
 <nav class="navbar_wrapper">
-    <a class="nav_logo_container" href="{% url 'users:homepage' %}">
+    <a class="nav_logo_container" href="{% url 'homepage' %}">
         <img class="nav_logo" src="{% static 'images/logo.svg' %}" alt="{% trans 'Logo of Capacity Exchange' %}" aria-label="{% trans 'Logo of Capacity Exchange' %}">
         <span class="nav_logo_text">{% trans "Capacity Exchange" %}</span>
     </a>
     <div class="nav_section menu_links">
-        <a href="{% url 'users:homepage' %}">{% trans "Skills" %}</a>
-        <a href="{% url 'users:homepage' %}">{% trans "Profile" %}</a>
-        <a href="{% url 'users:homepage' %}">{% trans "Feedback" %}</a>
+        <a href="{% url 'homepage' %}">{% trans "Skills" %}</a>
+        <a href="{% url 'homepage' %}">{% trans "Profile" %}</a>
+        <a href="{% url 'homepage' %}">{% trans "Feedback" %}</a>
         <div class="search-container">
             <form>
                 <input type="text" placeholder="Search.." name="search">
@@ -24,8 +24,8 @@
         <img class="nav_menu_icon open" src="{% static 'images/xmark-solid.svg' %}" alt="{% trans 'Close menu' %}" aria-label="{% trans 'Close menu' %}">
     </div>
     <div class="nav_section dropdown_menu">
-        <a href="{% url 'users:homepage' %}">{% trans "Skills" %}</a>
-        <a href="{% url 'users:homepage' %}">{% trans "Profile" %}</a>
-        <a href="{% url 'users:homepage' %}">{% trans "Feedback" %}</a>
+        <a href="{% url 'homepage' %}">{% trans "Skills" %}</a>
+        <a href="{% url 'homepage' %}">{% trans "Profile" %}</a>
+        <a href="{% url 'homepage' %}">{% trans "Feedback" %}</a>
     </div>
 </nav>
